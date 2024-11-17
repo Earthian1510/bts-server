@@ -21,7 +21,7 @@ app.post('/bus/location', async (req, res) => {
     const { busId, latitude, longitude, speed } = req.body;
 
     try {
-        const newLocation = new BusLocation({ busId, latitude, longitude, speed });
+        const newLocation = new BusLocation({ busId, latitude, longitude, speed, timestamp: new Date() });
         await newLocation.save();
         res.status(201).json({ message: 'Location added successfully', location: newLocation });
     } catch (error) {
@@ -29,6 +29,38 @@ app.post('/bus/location', async (req, res) => {
         res.status(500).json({ error: 'Failed to save location', details: error.message });
     }
 });
+
+// GET API - All buses
+app.get('/bus/location/', async (req, res) => {
+  
+  try {
+      const allBusLocations = await BusLocation.find();  
+      if (allBusLocations.length === 0) {
+          return res.status(404).json({ error: 'Bus not found' });
+      }
+      res.status(200).json(allBusLocations);
+  } catch (err) {
+      console.error(err);  
+      res.status(500).json({ error: 'Failed to fetch location', details: err.message });
+  }
+});
+
+// DELETE API - by ID
+app.delete('/bus/location/:id', async (req, res) => {
+  const locationId = req.params.id;
+  
+  try {
+      const busLocationToDelete = await BusLocation.findByIdAndDelete(locationId);  
+      if (!busLocationToDelete) {
+          return res.status(404).json({ error: 'Bus location not found' });
+      }
+      res.status(200).json({ message: 'Location deleted successfully' });
+  } catch (err) {
+      console.error(err);  
+      res.status(500).json({ error: 'Failed to delete location', details: err.message });
+  }
+});
+
 
 // Route to fetch the location of a bus
 app.get('/bus/location/:busId', async (req, res) => {
