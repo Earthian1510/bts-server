@@ -1,7 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const mongoose = require('mongoose')
 
 const { initializeDatabase } = require('./db/db.connect')
 const { BusLocation } = require('./models/busLocation.model')
@@ -14,7 +13,7 @@ app.use(cors())
 initializeDatabase()
 
 app.get('/bus', (req, res) => {
-    res.send('Location API is running!');
+    res.send('Hello Express!');
 });
 
 app.post('/bus/location', async (req, res) => {
