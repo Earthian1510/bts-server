@@ -22,7 +22,7 @@ app.post('/bus/location', async (req, res) => {
     const { busId, latitude, longitude, speed, time, date } = req.body;
 
     // Validate request body
-    if (!busId || !latitude || !longitude || !speed || !time || !date) {
+    if (!busId || !latitude || !longitude || !speed ) {
         return res.status(400).json({ error: 'All fields (busId, latitude, longitude, speed, time, date) are required' });
     }
 
