@@ -21,11 +21,6 @@ app.get('/', (req, res) => {
 app.post('/bus/location', async (req, res) => {
     const { busId, latitude, longitude, speed, time, date } = req.body;
 
-    // Validate request body
-    if (!busId || !latitude || !longitude || !speed ) {
-        return res.status(400).json({ error: 'All fields (busId, latitude, longitude, speed, time, date) are required' });
-    }
-
     try {
         const newLocation = new BusLocation({ busId, latitude, longitude, speed, time, date });
         await newLocation.save();
