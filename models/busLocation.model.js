@@ -6,10 +6,10 @@ const busLocationSchema = new mongoose.Schema({
     latitude: Number,
     longitude: Number,
     speed: Number,
-    timestamp: {
-        type: Date, default: Date.now
-    }
-});
+    date: String,
+    time: String,
+}
+);
 
 const BusLocation = mongoose.model('BusLocation', busLocationSchema)
 
